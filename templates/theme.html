@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css"> -->
+  <link rel="stylesheet" href="/static/Untitled.css">
+</head>
+
+<body>
+<nav class="navbar navbar-expand-md navbar-light">
+    <div class="container"> <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar6">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar6"> <a class="navbar-brand text-primary d-none d-md-block" href="/">
+          <i class="fa d-inline fa-rss"></i>
+          <b>f1b04rd</b>
+        </a>
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="/">Welcome back to f1b04rd<br></a></li>
+        </ul>
+        <ul class="navbar-nav">
+          {% if session['is_logged_in'] %}
+          <li class="nav-item"> <a class="nav-link" href="/settings">Settings</a> </li>
+          <li class="nav-item"> <a class="nav-link text-primary" href="/logout">Log out</a> </li>
+          {% else %}
+          <li class="nav-item"> <a class="nav-link" href="/login">Log in</a> </li>
+          <li class="nav-item"> <a class="nav-link text-primary" href="/signup">Register</a> </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+<div class="pt-2 pb-2" style="">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+			{% with messages = get_flashed_messages() %}
+				{% if messages %}
+					<ul class=flashes>
+					{% for message in messages %}
+						<li>{{ message }}</li>
+					{% endfor %}
+					</ul>
+				{% endif %}
+			{% endwith %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pt-2 pb-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 class="text-left">{{theme.theme}}<br></h1>
+          <h2 class="">{{theme.description}}</h2>
+		  <h2 class="">Rating: {{theme.rating}}</h2>
+          <div class="row">
+			<div class="col-md-12 mt-2" >
+				<form method="post">
+					<input type="submit" class="btn btn-success mx-1" name="up" value="up">
+					<input type="submit" class="btn mx-1 btn-danger" name="down" value = "down">
+				</form>
+			</div>
+            <!-- <div class="col-md-12 mt-2"><a class="btn btn-success mr-3" href="#"><i class="fa fa-fw fa-arrow-up"></i>up</a><a class="btn btn-danger" href="#"><i class="fa fa-fw fa-arrow-down"></i>down</a></div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="col-md-12">
+    </div>
+  </div>
+  <div class="pb-2">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="pb-3">Comments<br></h3>
+        </div>
+      </div>
+	  {% for comment in all_comments_for_theme %}
+      <div class="row">
+        <div class="col-md-12">
+          <p class="text-monospace" style="">{{comment.author}}<br></p>
+		  {% if comment.image_path != '' %}
+				<div style="height:150px; width:150 px;">
+					<img style="max-width:100%;max-height:100%;" src={{'/uploads/'+comment.image_path}}>
+				</div>
+			{% endif %}
+          <p class="pb-2">{{comment.comment}}</p>
+        </div>
+      </div>
+	  {% endfor %}
+    </div>
+  </div>
+  {% if session['is_logged_in'] %}
+  <div class="text-center" style="">
+    <div class="container">
+      <div class="row">
+        <div class="mx-auto col-md-10 p-4">
+          <h1 class="text-primary">Comment this theme</h1>
+          <p class="mb-4 lead text-info">Add your own comment to this theme</p>
+          <form method="post" enctype="multipart/form-data">
+            <div class="form-group"> <input type="file" name="image" class="form-control-file" id="form23
+form24
+form25" placeholder="Subject" name="Add your image"> </div>
+            <div class="form-group"><input type="text" name="comment" class="form-control form-control-sm" placeholder="Your comment" required="required"></div>
+            <input type="submit" class="btn btn-primary" value="Send">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  <div class="py-3">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 d-md-flex align-items-center text-center">
+          <ul class="nav d-flex justify-content-center">
+            <li class="nav-item"> <a class="nav-link active" href="/">Home</a> </li>
+          </ul> <i class="d-block fa fa-3x mx-auto text-primary"></i>
+          <p class="mb-0 py-1">©2018 f1b04rd All rights reserved</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> -->
+  <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> -->
+</body>
+
+</html>
